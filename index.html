@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moldaê by JL — Precificador 3D v2</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#6b7280;--primary:#7a1830;--primary2:#5d1024;--border:#e7eaf1;--green:#159957;--yellow:#b7791f;--red:#b42318;--shadow:0 12px 35px rgba(28,36,58,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}.nav{max-width:1220px;margin:auto;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}.logo{font-weight:900;font-size:22px}.logo span{color:var(--primary)}
+.menu-toggle{display:none;width:auto;margin:0;background:#f6e9ed;color:var(--primary2);padding:8px 11px;border-radius:9px;font-size:18px}.tabs{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}.tab{width:auto;margin:0;background:transparent;color:#667085;padding:8px 9px;border-radius:8px;font-size:11px;font-weight:750;border:0}.tab:hover{background:#f1f2f7;color:var(--text)}.tab.active{background:#f6e9ed;color:var(--primary2)}.badge{background:#f6e9ed;color:var(--primary2);padding:7px 11px;border-radius:999px;font-size:12px;font-weight:800}
+main{max-width:1220px;margin:0 auto;padding:34px 22px 60px}.hero{margin-bottom:24px}.hero h1{font-size:34px;margin:0 0 7px;letter-spacing:-1px}.hero p{margin:0;color:var(--muted);font-size:15px}
+.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:22px}.card{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:24px}.card h2{margin:0 0 18px;font-size:18px}.section{margin-top:24px}.section:first-of-type{margin-top:0}.section-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#8a91a1;margin-bottom:11px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:13px}label{font-size:12px;font-weight:750;display:block;margin-bottom:6px}input,select,textarea{width:100%;padding:11px 12px;border:1px solid #dfe3ec;border-radius:10px;background:#fff;font-size:14px;outline:none}textarea{min-height:80px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px #7a183018}.full{grid-column:1/-1}
+.result{position:sticky;top:88px;height:max-content}.big{background:linear-gradient(135deg,#6d5dfc,#9a2a48);color:#fff;border-radius:16px;padding:20px;margin-bottom:16px}.big small{opacity:.84}.price{font-size:37px;font-weight:900;margin:5px 0}.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}.row:last-child{border-bottom:0}.row span:last-child{font-weight:800}.profit{color:var(--green)}button{width:100%;border:0;border-radius:11px;padding:13px;background:var(--primary);color:#fff;font-size:14px;font-weight:800;cursor:pointer;margin-top:15px}button:hover{background:var(--primary2)}.secondary{background:#eef0f6;color:#30384a}.secondary:hover{background:#e2e5ed}.danger{background:#fbe9e9;color:#b42318}.danger:hover{background:#f6d6d6}.small-btn{width:auto;margin:0;padding:8px 10px;font-size:12px}.add-card{background:#fafaff;border:1px solid #e8e5ff;border-radius:14px;padding:18px;margin-top:14px}.item-list{display:grid;gap:10px;margin-top:18px}.item-card{border:1px solid var(--border);border-radius:13px;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:14px;background:#fff}.item-title{font-weight:850}.item-sub{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}.item-actions{display:flex;gap:7px}.item-actions button{width:auto;margin:0;padding:8px 10px;font-size:12px}.note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}.cost-pill{font-weight:850;color:var(--green)}.material-line{display:grid;grid-template-columns:1.5fr .7fr auto auto;gap:8px;align-items:end;border:1px solid var(--border);padding:10px;border-radius:10px;margin-bottom:8px}.material-total{display:flex;justify-content:space-between;font-weight:850;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 18px}.kpi{border:1px solid var(--border);border-radius:13px;padding:15px;background:#fff}.kpi b{display:block;font-size:20px;margin-top:5px}.muted{color:var(--muted);font-size:12px}.status{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800}.ok{background:#e9f7ef;color:#137a46}.warn{background:#fff4df;color:#9a6500}.bad{background:#fdecec;color:#a31d14}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:13px;margin-top:16px}.data-table{width:100%;border-collapse:collapse;min-width:760px}.data-table th,.data-table td{padding:10px 11px;border-bottom:1px solid var(--border);text-align:left;font-size:12px}.data-table th{background:#fafbfc;color:#667085}.data-table tr:last-child td{border-bottom:0}
+.hidden{display:none!important}footer{text-align:center;color:#8b92a2;font-size:12px;margin-top:28px}
+@media(max-width:1050px){.nav{flex-wrap:wrap}.menu-toggle{display:block}.tabs{display:none;order:4;width:100%}.tabs.open{display:flex}.tabs .tab{flex:1;min-width:105px}.grid{grid-template-columns:1fr}.result{position:static}.kpis{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.fields{grid-template-columns:1fr}.full{grid-column:auto}.material-line{grid-template-columns:1fr 1fr}.material-line select{grid-column:1/-1}.kpis{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="nav">
+<div class="logo">Moldaê <span>by JL</span></div>
+<button type="button" class="menu-toggle" onclick="toggleMenu()">☰</button>
+<nav class="tabs" id="mainMenu">
+<button class="tab active" data-tab="calculator">🧮 Calculadora</button>
+<button class="tab" data-tab="filaments">🧵 Filamentos</button>
+<button class="tab" data-tab="printers">🖨️ Impressoras</button>
+<button class="tab" data-tab="markets">🛒 Marketplaces</button>
+<button class="tab" data-tab="packaging">📦 Embalagens</button>
+<button class="tab" data-tab="marketprices">📊 Preços de mercado</button>
+<button class="tab" data-tab="history">📈 Histórico</button>
+<button class="tab" data-tab="settings">⚙️ Configurações</button>
+</nav><div class="badge">PRECIFICADOR 3D • V2</div>
+</div></header>
+
+<main>
+<section id="calculator" class="page">
+<div class="hero"><h1>Precifique sua peça 3D</h1><p>Cadastre os custos uma vez e, na calculadora, selecione filamento, impressora, marketplace e embalagem.</p></div>
+<div class="grid">
+<section class="card">
+<h2>Dados da peça</h2>
+<div class="section"><div class="section-title">Identificação</div><div class="fields">
+<div class="full"><label>Nome da peça</label><input id="productName" placeholder="Ex.: Porta-maquiagem Flor"></div>
+<div><label>Quantidade produzida</label><input id="qty" type="number" value="1" min="1" step="1"></div>
+</div></div>
+
+<div class="section"><div class="section-title">Materiais utilizados</div><div id="materialsContainer"></div>
+<button type="button" class="secondary" onclick="addMaterialLine()">＋ Adicionar filamento</button>
+<div class="material-total"><span>Total de filamentos</span><span id="materialsTotal">R$ 0,00</span></div></div>
+
+<div class="section"><div class="section-title">Produção</div><div class="fields">
+<div><label>Impressora</label><select id="printer"></select></div>
+<div><label>Tempo de impressão (horas)</label><input id="hours" type="number" value="4" min="0" step=".1"></div>
+<div><label>Energia</label><div class="note" style="margin:0">Calculada pela potência da impressora + tarifa configurada.</div></div>
+<div><label>Embalagem</label><select id="packagingSelect"></select></div>
+</div></div>
+
+<div class="section"><div class="section-title">Venda</div><div class="fields">
+<div class="full"><label>Canal / Marketplace</label><select id="marketplace"></select></div>
+<div><label>Margem desejada (%)</label><input id="margin" type="number" value="50" min="0" step=".1"></div>
+<div><label>Preço mínimo (calculado)</label><input id="minimumPreview" disabled></div>
+</div></div>
+<button onclick="calculate()">Calcular preço</button>
+<button class="secondary" onclick="resetForm()">Restaurar exemplo</button>
+<button class="secondary" onclick="saveHistory()">💾 Salvar no histórico</button>
+</section>
+
+<aside class="card result">
+<div class="big"><small>Preço de venda sugerido</small><div class="price" id="sale">R$ 0,00</div><small id="marginText">Margem configurada: 50%</small></div>
+<h2>Resumo</h2>
+<div class="row"><span>Filamentos</span><span id="rMaterial">R$ 0,00</span></div>
+<div class="row"><span>Impressora</span><span id="rMachine">R$ 0,00</span></div>
+<div class="row"><span>Energia</span><span id="rEnergy">R$ 0,00</span></div>
+<div class="row"><span>Manutenção (5%)</span><span id="rMaintenance">R$ 0,00</span></div>
+<div class="row"><span>Perdas (5%)</span><span id="rLoss">R$ 0,00</span></div>
+<div class="row"><span>Embalagem</span><span id="rPackaging">R$ 0,00</span></div>
+<div class="row"><span>Custo de produção</span><span id="rCost">R$ 0,00</span></div>
+<div class="row"><span>Taxas de venda</span><span id="rFees">R$ 0,00</span></div>
+<div class="row"><span>Preço mínimo</span><span id="rMinimum">R$ 0,00</span></div>
+<div class="row"><span>Lucro estimado</span><span class="profit" id="rProfit">R$ 0,00</span></div>
+<p class="note">Os percentuais de manutenção e perdas são reservas iniciais e podem ser alterados em Configurações.</p>
+</aside>
+</div>
+</section>
+
+<section id="filaments" class="page hidden">
+<div class="hero"><h1>Meus Filamentos</h1><p>Cadastre cada rolo. Na calculadora, informe apenas quantas gramas foram utilizadas.</p></div>
+<div class="card"><div class="add-card"><h2>Adicionar filamento</h2><div class="fields">
+<div><label>Nome</label><input id="fName" placeholder="PLA eSUN Branco"></div>
+<div><label>Material</label><select id="fMaterial"><option>PLA</option><option>PETG</option><option>ABS</option><option>TPU</option><option>Resina</option><option>Outro</option></select></div>
+<div><label>Cor</label><input id="fColor" placeholder="Branco"></div>
+<div><label>Peso do rolo (g)</label><input id="fWeight" type="number" value="1000" min="1"></div>
+<div><label>Preço pago (R$)</label><input id="fPrice" type="number" value="100" min="0" step=".01"></div>
+</div><button onclick="saveFilament()">Salvar filamento</button></div><div id="filamentList" class="item-list"></div></div>
+</section>
+
+<section id="printers" class="page hidden">
+<div class="hero"><h1>Minhas Impressoras</h1><p>O custo/hora é calculado a partir do investimento, vida útil, manutenção e energia.</p></div>
+<div class="card"><div class="add-card"><h2>Adicionar impressora</h2><div class="fields">
+<div><label>Nome</label><input id="pName" placeholder="Bambu Lab A1"></div>
+<div><label>Valor pago (R$)</label><input id="pPurchase" type="number" value="3500" min="0" step=".01"></div>
+<div><label>Vida útil estimada (horas)</label><input id="pLife" type="number" value="5000" min="1"></div>
+<div><label>Potência média (W)</label><input id="pWatts" type="number" value="130" min="0"></div>
+</div><p class="note">Sugestão inicial: use uma vida útil de 5.000 horas e revise depois com os dados reais da Moldaê. A manutenção é aplicada como percentual em Configurações.</p>
+<button onclick="savePrinter()">Salvar impressora</button></div><div id="printerList" class="item-list"></div></div>
+</section>
+
+<section id="markets" class="page hidden">
+<div class="hero"><h1>Meus Marketplaces</h1><p>Como as taxas ainda podem variar, cadastre cada canal e atualize quando tiver a taxa exata.</p></div>
+<div class="card"><div class="add-card"><h2>Adicionar / atualizar marketplace</h2><div class="fields">
+<div><label>Nome</label><input id="mName" placeholder="Shopee"></div>
+<div><label>Comissão (%)</label><input id="mCommission" type="number" min="0" step=".1"></div>
+<div><label>Taxa fixa por pedido (R$)</label><input id="mFixed" type="number" min="0" step=".01"></div>
+<div><label>Imposto sobre venda (%)</label><input id="mTax" type="number" min="0" step=".1"></div>
+</div><p class="note">Não trate os valores de exemplo como taxas oficiais. Substitua pelos valores vigentes do seu contrato/categoria.</p><button onclick="saveMarketplace()">Salvar marketplace</button></div><div id="marketplaceList" class="item-list"></div></div>
+</section>
+
+<section id="packaging" class="page hidden">
+<div class="hero"><h1>Embalagens</h1><p>Cadastre caixas, saquinhos, etiquetas e outros itens usados por produto.</p></div>
+<div class="card"><div class="add-card"><h2>Adicionar embalagem</h2><div class="fields">
+<div><label>Nome</label><input id="bName" placeholder="Caixa pequena"></div>
+<div><label>Custo por unidade (R$)</label><input id="bCost" type="number" min="0" step=".01"></div>
+</div><button onclick="savePackaging()">Salvar embalagem</button></div><div id="packagingList" class="item-list"></div></div>
+</section>
+
+<section id="marketprices" class="page hidden">
+<div class="hero"><h1>Preços de mercado</h1><p>Registre os preços encontrados para comparar o mercado com o custo e o preço sugerido da Moldaê.</p></div>
+<div class="card">
+<div class="kpis"><div class="kpi"><span class="muted">Registros</span><b id="mpCount">0</b></div><div class="kpi"><span class="muted">Menor preço</span><b id="mpMin">R$ 0,00</b></div><div class="kpi"><span class="muted">Preço médio</span><b id="mpAvg">R$ 0,00</b></div><div class="kpi"><span class="muted">Maior preço</span><b id="mpMax">R$ 0,00</b></div></div>
+<div class="add-card"><h2>Novo preço pesquisado</h2><div class="fields">
+<div><label>Produto</label><input id="mpProduct" placeholder="Porta-maquiagem Flor"></div>
+<div><label>Canal</label><select id="mpChannel"><option>Mercado Livre</option><option>Shopee</option><option>Instagram</option><option>Site</option><option>Outro</option></select></div>
+<div><label>Concorrente / loja</label><input id="mpSeller" placeholder="Nome da loja"></div>
+<div><label>Preço observado (R$)</label><input id="mpPrice" type="number" min="0" step=".01"></div>
+<div><label>Data</label><input id="mpDate" type="date"></div>
+<div><label>Link (opcional)</label><input id="mpLink" placeholder="https://..."></div>
+<div class="full"><label>Observação</label><input id="mpNote" placeholder="Personalizado, kit, tamanho semelhante..."></div>
+</div><button onclick="saveMarketPrice()">Adicionar pesquisa</button></div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Produto</th><th>Canal</th><th>Concorrente</th><th>Preço</th><th>Data</th><th>Observação</th><th></th></tr></thead><tbody id="marketPriceTable"></tbody></table></div>
+<p class="note">Dica: pesquise produtos realmente comparáveis — tamanho, material, personalização e quantidade podem mudar bastante o preço.</p>
+</div></section>
+
+<section id="history" class="page hidden">
+<div class="hero"><h1>Histórico de preços</h1><p>Guarde as precificações para comparar depois e acompanhar a evolução dos custos.</p></div>
+<div class="card"><div class="table-wrap"><table class="data-table"><thead><tr><th>Data</th><th>Produto</th><th>Canal</th><th>Custo</th><th>Preço mínimo</th><th>Preço sugerido</th><th>Lucro</th><th></th></tr></thead><tbody id="historyTable"></tbody></table></div></div>
+</section>
+
+<section id="settings" class="page hidden">
+<div class="hero"><h1>Configurações</h1><p>Valores gerais da operação. Deixe editável para ajustar quando vocês tiverem dados reais.</p></div>
+<div class="card"><div class="fields">
+<div><label>Manutenção / desgaste (%)</label><input id="setMaintenance" type="number" min="0" step=".1"></div>
+<div><label>Perdas / falhas (%)</label><input id="setLoss" type="number" min="0" step=".1"></div>
+<div><label>Tarifa de energia (R$/kWh)</label><input id="setKwh" type="number" min="0" step=".01"></div>
+<div><label>Margem padrão (%)</label><input id="setMargin" type="number" min="0" step=".1"></div>
+</div>
+<p class="note"><b>Sugestão inicial:</b> manutenção 5%, perdas 5%, energia R$ 0,90/kWh e margem padrão 50%. Esses números são apenas parâmetros iniciais para vocês ajustarem com os dados reais.</p>
+<button onclick="saveSettings()">Salvar configurações</button>
+<button class="secondary" onclick="resetSettings()">Restaurar sugestões iniciais</button>
+</div></section>
+
+<footer>Moldaê by JL • Precificador 3D • Dados salvos no navegador</footer>
+</main>
+
+<script>
+const brl=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const n=id=>Number(document.getElementById(id).value)||0;
+const today=()=>new Date().toISOString().slice(0,10);
+
+let settings=JSON.parse(localStorage.getItem('moldae_settings')||'null')||{maintenance:5,loss:5,kwh:.90,margin:50};
+let filaments=JSON.parse(localStorage.getItem('moldae_filaments')||'null')||{
+ "PLA Branco":{material:"PLA",color:"Branco",weight:1000,price:100},
+ "PLA Preto":{material:"PLA",color:"Preto",weight:1000,price:90}
+};
+let printers=JSON.parse(localStorage.getItem('moldae_printers')||'null')||{
+ "Bambu Lab A1":{purchase:3500,life:5000,watts:130}
+};
+let marketplaces=JSON.parse(localStorage.getItem('moldae_marketplaces')||'null')||{
+ "Venda direta":{commission:0,fixed:0,tax:0},
+ "Shopee (exemplo)":{commission:12,fixed:4,tax:6},
+ "Mercado Livre (exemplo)":{commission:12,fixed:0,tax:6}
+};
+let packaging=JSON.parse(localStorage.getItem('moldae_packaging')||'null')||{
+ "Sem embalagem":{cost:0},
+ "Saquinho":{cost:.30},
+ "Caixa pequena":{cost:1.50}
+};
+let marketPrices=JSON.parse(localStorage.getItem('moldae_marketprices')||'[]');
+let history=JSON.parse(localStorage.getItem('moldae_history')||'[]');
+
+function saveData(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function toggleMenu(){document.getElementById('mainMenu').classList.toggle('open')}
+function showTab(tab){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('hidden',p.id!==tab));document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.getElementById('mainMenu').classList.remove('open')}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+
+function renderFilaments(){
+ const list=document.getElementById('filamentList');
+ list.innerHTML=Object.entries(filaments).map(([name,f])=>{const g=f.weight?f.price/f.weight:0;return `<div class="item-card"><div><div class="item-title">${esc(name)}</div><div class="item-sub">${esc(f.material)} • ${esc(f.color)} • ${f.weight}g • ${brl(f.price)} o rolo</div></div><div><div class="cost-pill">${brl(g)}/g</div><div class="item-actions"><button class="secondary small-btn" onclick="editFilament('${esc(name)}')">Editar</button><button class="danger small-btn" onclick="deleteFilament('${esc(name)}')">Excluir</button></div></div></div>`}).join('');
+ refreshMaterialSelects();
+}
+function saveFilament(){const name=document.getElementById('fName').value.trim();if(!name)return alert('Informe o nome.');filaments[name]={material:document.getElementById('fMaterial').value,color:document.getElementById('fColor').value.trim(),weight:n('fWeight'),price:n('fPrice')};saveData('moldae_filaments',filaments);renderFilaments();clearFilamentForm()}
+function editFilament(name){const f=filaments[name];document.getElementById('fName').value=name;document.getElementById('fMaterial').value=f.material;document.getElementById('fColor').value=f.color;document.getElementById('fWeight').value=f.weight;document.getElementById('fPrice').value=f.price;showTab('filaments')}
+function deleteFilament(name){if(!confirm('Excluir '+name+'?'))return;delete filaments[name];saveData('moldae_filaments',filaments);renderFilaments()}
+function clearFilamentForm(){['fName','fColor','fPrice'].forEach(id=>document.getElementById(id).value='');document.getElementById('fWeight').value=1000}
+
+function printerCostHour(p){return (p.life>0?p.purchase/p.life:0)}
+function renderPrinters(){
+ document.getElementById('printerList').innerHTML=Object.entries(printers).map(([name,p])=>`<div class="item-card"><div><div class="item-title">${esc(name)}</div><div class="item-sub">Depreciação: ${brl(printerCostHour(p))}/h • ${p.watts}W • investimento ${brl(p.purchase)} / ${p.life}h</div></div><div class="item-actions"><button class="secondary small-btn" onclick="editPrinter('${esc(name)}')">Editar</button><button class="danger small-btn" onclick="deletePrinter('${esc(name)}')">Excluir</button></div></div>`).join('');
+ const s=document.getElementById('printer'),cur=s.value;s.innerHTML=Object.keys(printers).map(x=>`<option>${esc(x)}</option>`).join('');if(printers[cur])s.value=cur;calculate()
+}
+function savePrinter(){const name=document.getElementById('pName').value.trim();if(!name)return alert('Informe o nome.');printers[name]={purchase:n('pPurchase'),life:n('pLife'),watts:n('pWatts')};saveData('moldae_printers',printers);renderPrinters();document.getElementById('pName').value=''}
+function editPrinter(name){const p=printers[name];document.getElementById('pName').value=name;document.getElementById('pPurchase').value=p.purchase;document.getElementById('pLife').value=p.life;document.getElementById('pWatts').value=p.watts;showTab('printers')}
+function deletePrinter(name){if(Object.keys(printers).length<=1)return alert('Mantenha pelo menos uma impressora.');if(confirm('Excluir '+name+'?')){delete printers[name];saveData('moldae_printers',printers);renderPrinters()}}
+
+function renderMarketplaces(){
+ document.getElementById('marketplaceList').innerHTML=Object.entries(marketplaces).map(([name,m])=>`<div class="item-card"><div><div class="item-title">${esc(name)}</div><div class="item-sub">Comissão ${m.commission}% • Taxa fixa ${brl(m.fixed)} • Imposto ${m.tax}%</div></div><div class="item-actions"><button class="secondary small-btn" onclick="editMarketplace('${esc(name)}')">Editar</button><button class="danger small-btn" onclick="deleteMarketplace('${esc(name)}')">Excluir</button></div></div>`).join('');
+ const s=document.getElementById('marketplace'),cur=s.value;s.innerHTML=Object.keys(marketplaces).map(x=>`<option>${esc(x)}</option>`).join('');if(marketplaces[cur])s.value=cur;applyMarketplace()
+}
+function saveMarketplace(){const name=document.getElementById('mName').value.trim();if(!name)return alert('Informe o nome.');marketplaces[name]={commission:n('mCommission'),fixed:n('mFixed'),tax:n('mTax')};saveData('moldae_marketplaces',marketplaces);renderMarketplaces();document.getElementById('mName').value=''}
+function editMarketplace(name){const m=marketplaces[name];document.getElementById('mName').value=name;document.getElementById('mCommission').value=m.commission;document.getElementById('mFixed').value=m.fixed;document.getElementById('mTax').value=m.tax;showTab('markets')}
+function deleteMarketplace(name){if(Object.keys(marketplaces).length<=1)return alert('Mantenha pelo menos um marketplace.');if(confirm('Excluir '+name+'?')){delete marketplaces[name];saveData('moldae_marketplaces',marketplaces);renderMarketplaces()}}
+
+function renderPackaging(){
+ document.getElementById('packagingList').innerHTML=Object.entries(packaging).map(([name,p])=>`<div class="item-card"><div><div class="item-title">${esc(name)}</div><div class="item-sub">Custo por unidade: ${brl(p.cost)}</div></div><div class="item-actions"><button class="secondary small-btn" onclick="editPackaging('${esc(name)}')">Editar</button><button class="danger small-btn" onclick="deletePackaging('${esc(name)}')">Excluir</button></div></div>`).join('');
+ const s=document.getElementById('packagingSelect'),cur=s.value;s.innerHTML=Object.keys(packaging).map(x=>`<option>${esc(x)}</option>`).join('');if(packaging[cur])s.value=cur;calculate()
+}
+function savePackaging(){const name=document.getElementById('bName').value.trim();if(!name)return alert('Informe o nome.');packaging[name]={cost:n('bCost')};saveData('moldae_packaging',packaging);renderPackaging();document.getElementById('bName').value='';document.getElementById('bCost').value=''}
+function editPackaging(name){document.getElementById('bName').value=name;document.getElementById('bCost').value=packaging[name].cost;showTab('packaging')}
+function deletePackaging(name){if(Object.keys(packaging).length<=1)return alert('Mantenha pelo menos uma embalagem.');if(confirm('Excluir '+name+'?')){delete packaging[name];saveData('moldae_packaging',packaging);renderPackaging()}}
+
+function refreshMaterialSelects(){document.querySelectorAll('.materialSelect').forEach(s=>{const cur=s.value;s.innerHTML=Object.keys(filaments).map(x=>`<option>${esc(x)}</option>`).join('');if(filaments[cur])s.value=cur});calculate()}
+function addMaterialLine(name='',grams=''){const box=document.getElementById('materialsContainer');const row=document.createElement('div');row.className='material-line';row.innerHTML=`<div><label>Filamento</label><select class="materialSelect" onchange="calculate()"></select></div><div><label>Quantidade (g)</label><input class="materialGrams" type="number" min="0" step=".1" value="${grams}" oninput="calculate()"></div><div><label>Custo</label><div class="cost-pill materialCost">R$ 0,00</div></div><button type="button" class="danger small-btn" onclick="this.parentElement.remove();calculate()">×</button>`;box.appendChild(row);refreshMaterialSelects();if(name)row.querySelector('.materialSelect').value=name;calculate()}
+function materialCostTotal(){let total=0;document.querySelectorAll('.material-line').forEach(row=>{const f=filaments[row.querySelector('.materialSelect').value],g=Number(row.querySelector('.materialGrams').value)||0,c=f&&f.weight?g*(f.price/f.weight):0;row.querySelector('.materialCost').textContent=brl(c);total+=c});document.getElementById('materialsTotal').textContent=brl(total);return total}
+
+function applyMarketplace(){const m=marketplaces[document.getElementById('marketplace').value];if(m){calculate()}}
+function calculate(){
+ const material=materialCostTotal(),p=printers[document.getElementById('printer').value]||{},hours=n('hours');
+ const machine=hours*printerCostHour(p),energy=hours*(Number(p.watts)||0)/1000*settings.kwh;
+ const direct=material+machine+energy,maintenance=direct*(settings.maintenance/100),loss=(direct+maintenance)*(settings.loss/100);
+ const pack=(packaging[document.getElementById('packagingSelect').value]||{cost:0}).cost;
+ const production=direct+maintenance+loss+pack;
+ const m=marketplaces[document.getElementById('marketplace').value]||{commission:0,fixed:0,tax:0};
+ const fees=(m.commission+m.tax)/100, margin=n('margin')/100, denom=1-fees-margin;
+ const minimum=denom>0?(production+m.fixed)/(1-fees):0;
+ const sale=denom>0?(production+m.fixed)/denom:0;
+ const saleFees=sale*fees+m.fixed,profit=sale-saleFees-production;
+ document.getElementById('sale').textContent=brl(sale);
+ document.getElementById('marginText').textContent='Margem configurada: '+n('margin').toFixed(1).replace('.0','')+'%';
+ document.getElementById('minimumPreview').value=brl(minimum);
+ document.getElementById('rMaterial').textContent=brl(material);document.getElementById('rMachine').textContent=brl(machine);document.getElementById('rEnergy').textContent=brl(energy);document.getElementById('rMaintenance').textContent=brl(maintenance);document.getElementById('rLoss').textContent=brl(loss);document.getElementById('rPackaging').textContent=brl(pack);document.getElementById('rCost').textContent=brl(production);document.getElementById('rFees').textContent=brl(saleFees);document.getElementById('rMinimum').textContent=brl(minimum);document.getElementById('rProfit').textContent=brl(Math.max(0,profit));
+ return {material,machine,energy,maintenance,loss,pack,production,minimum,sale,saleFees,profit,marketplace:document.getElementById('marketplace').value,product:document.getElementById('productName').value.trim()||'Sem nome'}
+}
+function resetForm(){document.getElementById('productName').value='';document.getElementById('qty').value=1;document.getElementById('hours').value=4;document.getElementById('margin').value=settings.margin;document.getElementById('materialsContainer').innerHTML='';addMaterialLine(Object.keys(filaments)[0],80);document.getElementById('packagingSelect').value=Object.keys(packaging)[0];calculate()}
+
+function loadSettings(){document.getElementById('setMaintenance').value=settings.maintenance;document.getElementById('setLoss').value=settings.loss;document.getElementById('setKwh').value=settings.kwh;document.getElementById('setMargin').value=settings.margin;document.getElementById('margin').value=settings.margin}
+function saveSettings(){settings={maintenance:n('setMaintenance'),loss:n('setLoss'),kwh:n('setKwh'),margin:n('setMargin')};saveData('moldae_settings',settings);document.getElementById('margin').value=settings.margin;calculate();alert('Configurações salvas.')}
+function resetSettings(){settings={maintenance:5,loss:5,kwh:.90,margin:50};saveData('moldae_settings',settings);loadSettings();calculate()}
+
+function saveMarketPrice(){const item={id:Date.now(),product:document.getElementById('mpProduct').value.trim(),channel:document.getElementById('mpChannel').value,seller:document.getElementById('mpSeller').value.trim(),price:Number(document.getElementById('mpPrice').value)||0,date:document.getElementById('mpDate').value||today(),link:document.getElementById('mpLink').value.trim(),note:document.getElementById('mpNote').value.trim()};if(!item.product||!item.price)return alert('Informe produto e preço.');marketPrices.unshift(item);saveData('moldae_marketprices',marketPrices);renderMarketPrices();['mpProduct','mpSeller','mpPrice','mpLink','mpNote'].forEach(id=>document.getElementById(id).value='');document.getElementById('mpDate').value=today()}
+function renderMarketPrices(){const prices=marketPrices.map(x=>x.price).filter(x=>x>0);document.getElementById('mpCount').textContent=marketPrices.length;document.getElementById('mpMin').textContent=brl(prices.length?Math.min(...prices):0);document.getElementById('mpAvg').textContent=brl(prices.length?prices.reduce((a,b)=>a+b,0)/prices.length:0);document.getElementById('mpMax').textContent=brl(prices.length?Math.max(...prices):0);document.getElementById('marketPriceTable').innerHTML=marketPrices.map(x=>`<tr><td>${esc(x.product)}</td><td>${esc(x.channel)}</td><td>${esc(x.seller)}</td><td><b>${brl(x.price)}</b></td><td>${esc(x.date)}</td><td>${esc(x.note)}</td><td><button class="danger small-btn" onclick="deleteMarketPrice(${x.id})">Excluir</button></td></tr>`).join('')}
+function deleteMarketPrice(id){marketPrices=marketPrices.filter(x=>x.id!==id);saveData('moldae_marketprices',marketPrices);renderMarketPrices()}
+
+function saveHistory(){const r=calculate();history.unshift({id:Date.now(),date:today(),product:r.product,channel:r.marketplace,cost:r.production,minimum:r.minimum,sale:r.sale,profit:r.profit});saveData('moldae_history',history);renderHistory();alert('Precificação salva no histórico.')}
+function renderHistory(){document.getElementById('historyTable').innerHTML=history.map(x=>`<tr><td>${esc(x.date)}</td><td>${esc(x.product)}</td><td>${esc(x.channel)}</td><td>${brl(x.cost)}</td><td>${brl(x.minimum)}</td><td><b>${brl(x.sale)}</b></td><td class="cost-pill">${brl(x.profit)}</td><td><button class="danger small-btn" onclick="deleteHistory(${x.id})">Excluir</button></td></tr>`).join('')}
+function deleteHistory(id){history=history.filter(x=>x.id!==id);saveData('moldae_history',history);renderHistory()}
+
+document.getElementById('marketplace').addEventListener('change',applyMarketplace);
+document.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',calculate));
+renderFilaments();renderPrinters();renderMarketplaces();renderPackaging();renderMarketPrices();renderHistory();loadSettings();
+document.getElementById('materialsContainer').innerHTML='';addMaterialLine(Object.keys(filaments)[0],80);document.getElementById('mpDate').value=today();calculate();
+</script>
+</body>
+</html>
